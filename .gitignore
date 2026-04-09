@@ -6,13 +6,21 @@
 *.swp
 .buildlog/
 .history
+.DS_Store
+.atom/
+.svn/
+migrate_working_dir/
 
-
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
 
 # Flutter repo-specific
 /bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
+bin/internal/bootstrap.bat
+bin/internal/bootstrap.sh
 /bin/mingit/
 /dev/benchmarks/mega_gallery/
 /dev/bots/.recipe_deps
@@ -109,6 +117,9 @@ coverage/
 
 # Symbols
 app.*.symbols
+
+# Obfuscation related
+app.*.map.json
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
