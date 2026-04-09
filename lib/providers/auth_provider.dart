@@ -8,16 +8,25 @@ final authProvider = Provider<AuthService>((ref) => AuthService());
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  AppUser? _currentUser;
+
+  AppUser? get currentUser => _currentUser;
+
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   AppUser? _userFromFirebase(User? user) {
-    if (user == null) return null;
-    return AppUser(
+    if (user == null) {
+      _currentUser = null;
+      return null;
+    }
+    _currentUser = AppUser(
       uid: user.uid,
       email: user.email ?? '',
       displayName: user.displayName ?? 'Utilisateur',
       photoUrl: user.photoURL,
+      colocationId: null, // on mettra à jour plus tard
     );
+    return _currentUser;
   }
 
   Future<AppUser?> signInWithEmail(String email, String password) async {
@@ -32,11 +41,6 @@ class AuthService {
         email: email, password: password);
     await result.user?.updateDisplayName(name);
     return _userFromFirebase(result.user);
-  }
-
-  Future<AppUser?> signInWithGoogle() async {
-    // On implémentera Google plus tard si tu veux
-    throw UnimplementedError('Google à venir');
   }
 
   Future<void> signOut() async => await _auth.signOut();

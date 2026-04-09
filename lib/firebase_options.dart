@@ -1,6 +1,6 @@
-// lib/firebase_options.dart
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
@@ -16,11 +16,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey:
-        'AIzaSyAV89uWLaUKkS87jOpZeU9votKFL8iCl2c', // ← Remplace par ta clé API Android Firebase
+    apiKey: 'AIzaSyAV89uWLaUKkS87jOpZeU9votKFL8iCl2c',
     appId: '1:787220096123:android:42175ec30d752c5d312ede',
-    messagingSenderId: '1234567890',
+    messagingSenderId: '787220096123',
     projectId: 'devmob-coloc-app',
-    storageBucket: 'devmob-coloc-app.appspot.com', // format correct
+    storageBucket: 'devmob-coloc-app.firebasestorage.app',
   );
 }

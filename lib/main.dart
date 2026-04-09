@@ -1,4 +1,5 @@
 // lib/main.dart
+import 'package:devmob_coloc_flutter_project/views/home/colocation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: "DEVMOB-Coloc'App",
       theme: ThemeData(primarySwatch: Colors.teal),
       darkTheme: ThemeData.dark(),
-      home: const AuthScreen(),
+      home: const ColocationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -5,6 +5,7 @@ class Colocation {
   final String inviteCode;
   final String adminId;
   final List<String> members;
+  final DateTime createdAt;
 
   Colocation({
     required this.id,
@@ -12,6 +13,7 @@ class Colocation {
     required this.inviteCode,
     required this.adminId,
     required this.members,
+    required this.createdAt,
   });
 
   factory Colocation.fromMap(Map<String, dynamic> map, String id) {
@@ -21,6 +23,7 @@ class Colocation {
       inviteCode: map['inviteCode'] ?? '',
       adminId: map['adminId'] ?? '',
       members: List<String>.from(map['members'] ?? []),
+      createdAt: DateTime.parse(map['createdAt']),
     );
   }
 
@@ -30,6 +33,7 @@ class Colocation {
       'inviteCode': inviteCode,
       'adminId': adminId,
       'members': members,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 }
