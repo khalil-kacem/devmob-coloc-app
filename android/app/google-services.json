@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787220096123",
+    "project_id": "devmob-coloc-app",
+    "storage_bucket": "devmob-coloc-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787220096123:android:42175ec30d752c5d312ede",
+        "android_client_info": {
+          "package_name": "com.example.devmob_coloc_flutter_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV89uWLaUKkS87jOpZeU9votKFL8iCl2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
