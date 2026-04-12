@@ -1,10 +1,11 @@
 // lib/main.dart
+import 'package:devmob_coloc_flutter_project/views/auth/login_page.dart'; // ou auth_screen.dart si tu l'utilises encore
+import 'package:devmob_coloc_flutter_project/views/home/Starting_page.dart';
 import 'package:devmob_coloc_flutter_project/views/home/colocation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
-import 'views/home/auth_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,13 @@ class MyApp extends StatelessWidget {
       title: "DEVMOB-Coloc'App",
       theme: ThemeData(primarySwatch: Colors.teal),
       darkTheme: ThemeData.dark(),
-      home: const ColocationScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const BinomePage(),
+        '/colocation': (context) => const ColocationScreen(),
+        '/home': (context) => const Scaffold(
+            body: Center(child: Text("Accueil - Feature 3 en cours..."))),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
