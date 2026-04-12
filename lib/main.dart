@@ -1,7 +1,8 @@
 // lib/main.dart
-import 'package:devmob_coloc_flutter_project/views/auth/login_page.dart'; // ou auth_screen.dart si tu l'utilises encore
+import 'package:devmob_coloc_flutter_project/views/auth/login_page.dart';
 import 'package:devmob_coloc_flutter_project/views/home/Starting_page.dart';
 import 'package:devmob_coloc_flutter_project/views/home/colocation_screen.dart';
+import 'package:devmob_coloc_flutter_project/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,8 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const BinomePage(),
         '/colocation': (context) => const ColocationScreen(),
-        '/home': (context) => const Scaffold(
-            body: Center(child: Text("Accueil - Feature 3 en cours..."))),
+        '/home': (context) => const HomeScreen(), // ← Nouveau dashboard
       },
       debugShowCheckedModeBanner: false,
     );
