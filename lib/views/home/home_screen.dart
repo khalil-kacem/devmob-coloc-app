@@ -1,5 +1,7 @@
 // lib/views/home/home_screen.dart
 import 'package:devmob_coloc_flutter_project/providers/colocation_provider.dart';
+import 'package:devmob_coloc_flutter_project/providers/tasks_provider.dart';
+import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,12 +18,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   final List<Widget> _screens = [
     const Center(
-        child: Text("🏠 Accueil Dashboard\n(Prochainement : résumé global)",
-            style: TextStyle(fontSize: 18))),
-    const Center(child: Text("📋 Tâches\n(Feature 4 bientôt)")),
-    const Center(child: Text("💰 Dépenses\n(Feature 5 bientôt)")),
-    const Center(child: Text("💬 Chat\n(Feature 6 bientôt)")),
-    const Center(child: Text("📄 Documents\n(Feature 7 bientôt)")),
+        child: Text("🏠 Tableau de bord\nRésumé de la colocation",
+            style: TextStyle(fontSize: 20))),
+    const TasksScreen(), // ← Écran réel des tâches
+    const Center(child: Text("💰 Dépenses (bientôt)")),
+    const Center(child: Text("💬 Chat (bientôt)")),
+    const Center(child: Text("📄 Documents (bientôt)")),
   ];
 
   @override
@@ -32,21 +34,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: colocationAsync.when(
-          data: (colocation) => Text(
-            colocation?.name ?? "DEVMOB-Coloc'App",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-          ),
+          data: (coloc) => Text(coloc?.name ?? "DEVMOB-Coloc'App",
+              style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
           loading: () => const Text("Chargement..."),
           error: (_, __) => const Text("Ma Colocation"),
         ),
         backgroundColor: const Color(0xFF0A5BE1),
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {}, // Notifications plus tard
-          ),
-        ],
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -57,11 +51,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "Tâches"),
+          BottomNavigationBarItem(icon: Icon(Icons.task_alt), label: "Tâches"),
           BottomNavigationBarItem(
               icon: Icon(Icons.attach_money), label: "Dépenses"),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chat"),
-          BottomNavigationBarItem(icon: Icon(Icons.folder), label: "Docs"),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Chat"),
+          BottomNavigationBarItem(icon: Icon(Icons.folder_copy), label: "Docs"),
         ],
       ),
     );
