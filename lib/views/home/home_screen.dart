@@ -24,17 +24,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const Center(
-        child: Text("🏠 Accueil\nRésumé de la colocation",
-            style: TextStyle(fontSize: 20))),
     const TasksScreen(),
     const ExpensesScreen(),
     const ChatScreen(),
-    const DocumentsScreen(),
-    const ShoppingScreen(), // ← Feature 9
+
     const CalendarScreen(), // ← Feature 8
     const SettingsScreen(), // ← Nouvelle Feature
-    const NotificationsScreen(),
   ];
 
   @override
@@ -48,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data: (coloc) => Text(coloc?.name ?? "DEVMOB-Coloc'App",
               style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
           loading: () => const Text("Chargement..."),
-          error: (_, __) => const Text("Ma Colocation"),
+          error: (_, __) => const Text("Ma Colocationn"),
         ),
         backgroundColor: const Color(0xFF0A5BE1),
         foregroundColor: Colors.white,
@@ -61,20 +56,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
           BottomNavigationBarItem(icon: Icon(Icons.task_alt), label: "Tâches"),
           BottomNavigationBarItem(
               icon: Icon(Icons.attach_money), label: "Dépenses"),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Chat"),
-          BottomNavigationBarItem(icon: Icon(Icons.folder_copy), label: "Docs"),
           BottomNavigationBarItem(
               icon: Icon(Icons.folder_copy), label: "Calendrier"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.folder_copy), label: "Shopping"),
-          BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Paramètres"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notifications"),
         ],
       ),
     );

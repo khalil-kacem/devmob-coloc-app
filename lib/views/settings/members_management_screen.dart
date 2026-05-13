@@ -1,4 +1,5 @@
 // lib/views/settings/members_management_screen.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devmob_coloc_flutter_project/providers/colocation_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,35 +23,69 @@ class _MembersManagementScreenState
     final colocationAsync = ref.watch(currentColocationProvider);
 
     return Scaffold(
+      backgroundColor: const Color(0xffF5F7FB),
+
+      // ================= APP BAR =================
       appBar: AppBar(
-        title: Text("Gérer les membres",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF0A5BE1),
+        elevation: 0,
+        backgroundColor: Colors.teal,
+        title: Text(
+          "Gestion des membres",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
+
+      // ================= BODY =================
       body: colocationAsync.when(
         data: (colocation) {
-          if (colocation == null)
-            return const Center(child: Text("Aucune colocation"));
+          if (colocation == null) {
+            return Center(
+              child: Text(
+                "Aucune colocation",
+                style: GoogleFonts.poppins(),
+              ),
+            );
+          }
 
           return Column(
             children: [
-              // Ajouter par email
+              const SizedBox(height: 16),
+
+              // ADD BUTTON
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton.icon(
-                  onPressed: () => _showAddByEmailDialog(colocation.id),
-                  icon: const Icon(Icons.person_add),
-                  label:
-                      Text("Ajouter par email", style: GoogleFonts.poppins()),
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _showAddByEmailDialog(colocation.id),
+                    icon: const Icon(Icons.person_add),
+                    label: Text(
+                      "Ajouter un membre",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                  ),
                 ),
               ),
 
-              // Liste des membres
+              const SizedBox(height: 20),
+
+              // MEMBERS LIST
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: colocation.members.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
                     final uid = colocation.members[index];
                     final isAdmin = uid == colocation.adminId;
@@ -61,36 +96,100 @@ class _MembersManagementScreenState
                           .doc(uid)
                           .get(),
                       builder: (context, snapshot) {
-                        String memberName = "Utilisateur inconnu";
+                        String name = "Utilisateur";
                         if (snapshot.hasData && snapshot.data!.exists) {
-                          memberName = snapshot.data!['name'] ?? "Colocataire";
+                          name = snapshot.data!['name'] ?? "Colocataire";
                         }
 
-                        return Card(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor:
-                                  isAdmin ? Colors.orange : Colors.teal,
-                              child: Text(memberName[0].toUpperCase()),
-                            ),
-                            title: Text(memberName,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600)),
-                            subtitle: Text(
-                                isAdmin ? "Référent (Admin)" : "Colocataire"),
-                            trailing: isAdmin
-                                ? const Chip(
-                                    label: Text("Admin"),
-                                    backgroundColor: Colors.orange,
-                                    labelStyle: TextStyle(color: Colors.white))
-                                : IconButton(
-                                    icon: const Icon(Icons.delete,
-                                        color: Colors.red),
-                                    onPressed: () => _kickMember(
-                                        colocation.id, uid, memberName),
+                        return Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.04),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              // AVATAR
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundColor: isAdmin
+                                    ? Colors.orange.withOpacity(0.2)
+                                    : Colors.teal.withOpacity(0.2),
+                                child: Text(
+                                  name.isNotEmpty ? name[0].toUpperCase() : "?",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color:
+                                        isAdmin ? Colors.orange : Colors.teal,
                                   ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              // NAME + ROLE
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      name,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      isAdmin
+                                          ? "Référent (Admin)"
+                                          : "Colocataire",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // ACTION
+                              isAdmin
+                                  ? Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: Colors.orange.withOpacity(0.12),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        "Admin",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.orange,
+                                        ),
+                                      ),
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(
+                                        Icons.delete_rounded,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () => _kickMember(
+                                        colocation.id,
+                                        uid,
+                                        name,
+                                      ),
+                                    ),
+                            ],
                           ),
                         );
                       },
@@ -101,33 +200,64 @@ class _MembersManagementScreenState
             ],
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, __) => const Center(child: Text("Erreur de chargement")),
+        loading: () => const Center(
+          child: CircularProgressIndicator(
+            color: Colors.teal,
+          ),
+        ),
+        error: (_, __) => Center(
+          child: Text(
+            "Erreur de chargement",
+            style: GoogleFonts.poppins(color: Colors.red),
+          ),
+        ),
       ),
     );
   }
 
-  // ==================== AJOUTER PAR EMAIL ====================
+  // ================= ADD MEMBER =================
   void _showAddByEmailDialog(String colocationId) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Ajouter un membre"),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        title: Text(
+          "Ajouter un membre",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         content: TextField(
           controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            hintText: "exemple@email.com",
-            border: OutlineInputBorder(),
+          style: GoogleFonts.poppins(),
+          decoration: InputDecoration(
+            hintText: "email@example.com",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Annuler")),
-          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Annuler",
+              style: GoogleFonts.poppins(),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+            ),
             onPressed: () => _addMemberByEmail(colocationId),
-            child: const Text("Ajouter"),
+            child: Text(
+              "Ajouter",
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -148,8 +278,11 @@ class _MembersManagementScreenState
           .get();
 
       if (query.docs.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("❌ Aucun utilisateur trouvé avec cet email")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Aucun utilisateur trouvé"),
+          ),
+        );
         return;
       }
 
@@ -162,31 +295,55 @@ class _MembersManagementScreenState
         'members': FieldValue.arrayUnion([userId]),
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("✅ Membre ajouté avec succès !")));
       _emailController.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Membre ajouté avec succès"),
+        ),
+      );
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Erreur : $e")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erreur: $e")),
+      );
     }
   }
 
-  // ==================== SUPPRIMER (KICK) MEMBRE ====================
+  // ================= REMOVE MEMBER =================
   Future<void> _kickMember(
-      String colocationId, String userId, String memberName) async {
+    String colocationId,
+    String userId,
+    String memberName,
+  ) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Expulser le membre ?"),
+        title: Text(
+          "Confirmer",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         content: Text(
-            "Voulez-vous vraiment expulser $memberName de la colocation ?"),
+          "Expulser $memberName ?",
+          style: GoogleFonts.poppins(),
+        ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text("Annuler")),
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(
+              "Annuler",
+              style: GoogleFonts.poppins(),
+            ),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text("Expulser", style: TextStyle(color: Colors.red)),
+            child: Text(
+              "Expulser",
+              style: GoogleFonts.poppins(
+                color: Colors.red,
+              ),
+            ),
           ),
         ],
       ),
@@ -202,11 +359,15 @@ class _MembersManagementScreenState
         'members': FieldValue.arrayRemove([userId]),
       });
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("$memberName a été expulsé")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$memberName expulsé"),
+        ),
+      );
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Erreur : $e")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erreur: $e")),
+      );
     }
   }
 }
