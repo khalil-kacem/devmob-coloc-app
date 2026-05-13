@@ -5,6 +5,7 @@ import 'package:devmob_coloc_flutter_project/views/calendar/calendar_screen.dart
 import 'package:devmob_coloc_flutter_project/views/chat/chat_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/documents/documents_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
+import 'package:devmob_coloc_flutter_project/views/notifications/notifications_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/settings/settings_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/shopping/shopping_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
@@ -33,6 +34,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const ShoppingScreen(), // ← Feature 9
     const CalendarScreen(), // ← Feature 8
     const SettingsScreen(), // ← Nouvelle Feature
+    const NotificationsScreen(),
   ];
 
   @override
@@ -71,6 +73,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               icon: Icon(Icons.folder_copy), label: "Shopping"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Paramètres"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: "Notifications"),
         ],
       ),
     );
