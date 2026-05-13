@@ -1,6 +1,7 @@
 // lib/views/home/home_screen.dart
 import 'package:devmob_coloc_flutter_project/providers/colocation_provider.dart';
 import 'package:devmob_coloc_flutter_project/providers/tasks_provider.dart';
+import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Text("🏠 Tableau de bord\nRésumé de la colocation",
             style: TextStyle(fontSize: 20))),
     const TasksScreen(), // ← Écran réel des tâches
-    const Center(child: Text("💰 Dépenses (bientôt)")),
+    const ExpensesScreen(), // ← Écran réel des dépenses
     const Center(child: Text("💬 Chat (bientôt)")),
     const Center(child: Text("📄 Documents (bientôt)")),
   ];
