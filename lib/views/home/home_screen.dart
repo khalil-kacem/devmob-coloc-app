@@ -1,6 +1,7 @@
 // lib/views/home/home_screen.dart
 import 'package:devmob_coloc_flutter_project/providers/colocation_provider.dart';
 import 'package:devmob_coloc_flutter_project/providers/tasks_provider.dart';
+import 'package:devmob_coloc_flutter_project/views/calendar/calendar_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/chat/chat_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/documents/documents_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const ExpensesScreen(), // ← Écran réel des dépenses
     const ChatScreen(),
     const DocumentsScreen(),
+    const CalendarScreen()
   ];
 
   @override
@@ -59,6 +61,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               icon: Icon(Icons.attach_money), label: "Dépenses"),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Chat"),
           BottomNavigationBarItem(icon: Icon(Icons.folder_copy), label: "Docs"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.folder_copy), label: "Calendrier"),
         ],
       ),
     );
