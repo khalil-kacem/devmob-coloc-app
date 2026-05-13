@@ -19,7 +19,7 @@ class SettingsScreen extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        // Info Colocation
+        // Informations de la colocation
         Card(
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -27,10 +27,12 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(Icons.home, size: 40, color: Colors.teal),
-                  title: Text(colocation?.name ?? "Ma Colocation",
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+                  title: Text(
+                    colocation?.name ?? "Ma Colocation",
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Text(
-                      "Code d'invitation : ${colocation?.inviteCode ?? ''}"),
+                      "Code : ${colocation?.inviteCode ?? 'Non disponible'}"),
                 ),
                 const Divider(),
                 ListTile(
@@ -44,7 +46,19 @@ class SettingsScreen extends ConsumerWidget {
 
         const SizedBox(height: 16),
 
-        // Section Admin - Visible uniquement pour le référent
+        // Notifications
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.notifications_active, color: Colors.blue),
+            title: const Text("Notifications"),
+            subtitle: const Text("Activées"),
+            trailing: const Icon(Icons.check_circle, color: Colors.green),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Section Admin (visible uniquement par le référent)
         if (isAdmin)
           Card(
             color: Colors.orange.shade50,
@@ -84,15 +98,17 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
 
         // Déconnexion
         Card(
           child: ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
-            title: Text("Déconnexion",
-                style: GoogleFonts.poppins(
-                    color: Colors.red, fontWeight: FontWeight.w600)),
+            title: Text(
+              "Déconnexion",
+              style: GoogleFonts.poppins(
+                  color: Colors.red, fontWeight: FontWeight.w600),
+            ),
             onTap: () async {
               await ref.read(authProvider).signOut();
               if (context.mounted) Navigator.pushReplacementNamed(context, '/');
