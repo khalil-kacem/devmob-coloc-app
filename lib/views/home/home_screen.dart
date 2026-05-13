@@ -5,6 +5,7 @@ import 'package:devmob_coloc_flutter_project/views/calendar/calendar_screen.dart
 import 'package:devmob_coloc_flutter_project/views/chat/chat_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/documents/documents_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
+import 'package:devmob_coloc_flutter_project/views/shopping/shopping_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +29,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const ExpensesScreen(), // ← Écran réel des dépenses
     const ChatScreen(),
     const DocumentsScreen(),
-    const CalendarScreen()
+    const CalendarScreen(),
+    const ShoppingScreen()
   ];
 
   @override
@@ -63,6 +65,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.folder_copy), label: "Docs"),
           BottomNavigationBarItem(
               icon: Icon(Icons.folder_copy), label: "Calendrier"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.folder_copy), label: "Shopping"),
         ],
       ),
     );
