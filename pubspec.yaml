@@ -21,6 +21,8 @@ dependencies:
   cloud_firestore: ^5.4.0
   firebase_storage: ^12.2.0
   google_fonts: 6.2.0
+  image_picker: ^1.1.2
+
 
   # State management
   flutter_riverpod: ^2.6.1
@@ -29,6 +31,7 @@ dependencies:
   google_sign_in: ^6.2.2
   fluttertoast: ^8.2.8
   uuid: ^4.5.0
+  file_picker: 6.2.1
 
 # Development dependencies
 dev_dependencies:

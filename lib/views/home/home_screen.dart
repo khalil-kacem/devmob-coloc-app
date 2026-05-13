@@ -2,6 +2,7 @@
 import 'package:devmob_coloc_flutter_project/providers/colocation_provider.dart';
 import 'package:devmob_coloc_flutter_project/providers/tasks_provider.dart';
 import 'package:devmob_coloc_flutter_project/views/chat/chat_screen.dart';
+import 'package:devmob_coloc_flutter_project/views/documents/documents_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const TasksScreen(), // ← Écran réel des tâches
     const ExpensesScreen(), // ← Écran réel des dépenses
     const ChatScreen(),
-    const Center(child: Text("📄 Documents (bientôt)")),
+    const DocumentsScreen(),
   ];
 
   @override
