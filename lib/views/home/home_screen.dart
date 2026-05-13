@@ -5,6 +5,7 @@ import 'package:devmob_coloc_flutter_project/views/calendar/calendar_screen.dart
 import 'package:devmob_coloc_flutter_project/views/chat/chat_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/documents/documents_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/expenses/expenses_screen.dart';
+import 'package:devmob_coloc_flutter_project/views/settings/settings_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/shopping/shopping_screen.dart';
 import 'package:devmob_coloc_flutter_project/views/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   final List<Widget> _screens = [
     const Center(
-        child: Text("🏠 Tableau de bord\nRésumé de la colocation",
+        child: Text("🏠 Accueil\nRésumé de la colocation",
             style: TextStyle(fontSize: 20))),
-    const TasksScreen(), // ← Écran réel des tâches
-    const ExpensesScreen(), // ← Écran réel des dépenses
+    const TasksScreen(),
+    const ExpensesScreen(),
     const ChatScreen(),
     const DocumentsScreen(),
-    const CalendarScreen(),
-    const ShoppingScreen()
+    const ShoppingScreen(), // ← Feature 9
+    const CalendarScreen(), // ← Feature 8
+    const SettingsScreen(), // ← Nouvelle Feature
   ];
 
   @override
@@ -67,6 +69,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               icon: Icon(Icons.folder_copy), label: "Calendrier"),
           BottomNavigationBarItem(
               icon: Icon(Icons.folder_copy), label: "Shopping"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Paramètres"),
         ],
       ),
     );
